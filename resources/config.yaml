@@ -3,11 +3,12 @@ server:
   port: 8080
 
 databases:
-  user_detail:
+  users:
     host: "localhost"
     port: 5432
     user: "******"
     password: "******"
+    database: "user_details"
 
 redis:
   host: "localhost"

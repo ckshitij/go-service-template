@@ -25,6 +25,7 @@ type DatabaseConfig struct {
 	Port     int    `mapstructure:"port"`
 	User     string `mapstructure:"user"`
 	Password string `mapstructure:"password"`
+	Database string `mapstructure:"database"`
 }
 
 // RedisConfig holds Redis-related configurations
