@@ -9,7 +9,7 @@ import (
 
 func main() {
 	// Load configuration
-	conf, err := config.LoadConfig("./resources/config.yaml")
+	conf, err := config.LoadConfig()
 	if err != nil {
 		log.Fatalf("Failed to load configuration: %v", err)
 	}
