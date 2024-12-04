@@ -21,7 +21,7 @@ func (h *usersHandler) Handlers() []rest.HTTPHandler {
 		{
 			Method:     rest.POST,
 			Path:       "/users",
-			Middleware: []gin.HandlerFunc{middleware.LogRequest()},
+			Middleware: []gin.HandlerFunc{middleware.AttachRequestID()},
 			Handler:    h.CreateUser,
 		},
 		{
@@ -52,10 +52,12 @@ func (h *usersHandler) CreateUser(c *gin.Context) {
 
 func (h *usersHandler) GetUserByEmail(c *gin.Context) {
 	email := c.Query("email")
+	password := c.Query("password")
 
 	user, err := h.service.GetUser(c.Request.Context(), ServiceRequest{
 		UserRequest: UserRequest{
-			Email: email,
+			Email:    email,
+			Password: password,
 		},
 	})
 	if err != nil {

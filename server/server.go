@@ -3,8 +3,10 @@ package server
 import (
 	"fmt"
 	"log"
+	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.io/ckshitij/go-service-template/api/middleware"
 	"github.io/ckshitij/go-service-template/api/pkg/users"
 	"github.io/ckshitij/go-service-template/api/wrapper/rest"
 	"github.io/ckshitij/go-service-template/config"
@@ -13,16 +15,21 @@ import (
 
 // SetupServer initializes and configures the Gin server
 func SetupServer(conf *config.Config) *gin.Engine {
-	r := gin.Default()
+	router := gin.Default()
 
 	conn, err := db.NewPostgresDB(conf)
 	if err != nil {
 		log.Fatalf("Failed to connect to database: %v", err)
 	}
-	usersHandlers := users.InitUsers(conn).Handlers()
-	rest.ProcessAndRegisterHandlers(r, usersHandlers)
 
-	return r
+	router.Use(middleware.TimeoutMiddleware(time.Duration(3 * time.Second)))
+	usersHandlers := users.InitUsers(conn)
+	endpoints := []rest.IEndpointProvider{
+		usersHandlers,
+	}
+	rest.RegisterHandlers(router, endpoints)
+
+	return router
 }
 
 // StartServer starts the Gin server

@@ -7,7 +7,7 @@ import (
 
 type ErrorStatusMap struct {
 	ErrMsg     string
-	HttpStatus int
+	HTTPStatus int
 }
 
 type ErrorMap map[int]ErrorStatusMap
@@ -22,11 +22,10 @@ type AppError struct {
 	Stack           []string
 	isStackRequires bool
 	HTTPStatus      int
-	RequestId       string
+	RequestID       string
 }
 
 func NewAppError(code int, errWrapper ErrorWrapper) *AppError {
-
 	// Caller will make sure the error code
 	// will be present in ErrorWrapper
 	errMap := errWrapper.GetErrorMap()
@@ -34,7 +33,7 @@ func NewAppError(code int, errWrapper ErrorWrapper) *AppError {
 		Code:            code,
 		message:         errMap[code].ErrMsg,
 		isStackRequires: false,
-		HTTPStatus:      errMap[code].HttpStatus,
+		HTTPStatus:      errMap[code].HTTPStatus,
 	}
 }
 
