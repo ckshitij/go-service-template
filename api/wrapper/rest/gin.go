@@ -27,7 +27,6 @@ type HTTPHandler struct {
 }
 
 func RegisterHandlers(router *gin.Engine, providers []IEndpointProvider) {
-
 	grp := router.Group("/template-service/api/v1/")
 
 	for _, provider := range providers {

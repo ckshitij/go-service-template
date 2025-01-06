@@ -22,7 +22,7 @@ func SetupServer(conf *config.Config) *gin.Engine {
 		log.Fatalf("Failed to connect to database: %v", err)
 	}
 
-	router.Use(middleware.TimeoutMiddleware(time.Duration(3 * time.Second)))
+	router.Use(middleware.TimeoutMiddleware(3 * time.Second))
 	usersHandlers := users.InitUsers(conn)
 	endpoints := []rest.IEndpointProvider{
 		usersHandlers,

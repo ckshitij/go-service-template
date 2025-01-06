@@ -35,13 +35,12 @@ func (s *service) CreateUser(ctx context.Context, req ServiceRequest) (*User, er
 }
 
 func (s *service) GetUser(ctx context.Context, req ServiceRequest) (*User, error) {
-
 	userInfo, err := s.repo.GetByEmail(ctx, req.Email)
 	if err != nil {
 		return nil, err
 	}
 
-	if err = bcrypt.CompareHashAndPassword([]byte(userInfo.Password), []byte(req.Password)); err != nil {
+	if err := bcrypt.CompareHashAndPassword([]byte(userInfo.Password), []byte(req.Password)); err != nil {
 		return nil, err
 	}
 	return userInfo, nil

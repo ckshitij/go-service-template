@@ -19,6 +19,5 @@ func TimeoutMiddleware(timeout time.Duration) gin.HandlerFunc {
 
 		// Proceed with the request
 		c.Next()
-
 	}
 }
