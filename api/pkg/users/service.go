@@ -6,15 +6,15 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-type usersServiceImpl struct {
+type service struct {
 	repo UsersRepository
 }
 
 func NewUsersService(repo UsersRepository) UsersService {
-	return &usersServiceImpl{repo: repo}
+	return &service{repo: repo}
 }
 
-func (s *usersServiceImpl) CreateUser(ctx context.Context, req ServiceRequest) (*User, error) {
+func (s *service) CreateUser(ctx context.Context, req ServiceRequest) (*User, error) {
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
 	if err != nil {
 		return nil, err
@@ -34,7 +34,7 @@ func (s *usersServiceImpl) CreateUser(ctx context.Context, req ServiceRequest) (
 	return user, nil
 }
 
-func (s *usersServiceImpl) GetUser(ctx context.Context, req ServiceRequest) (*User, error) {
+func (s *service) GetUser(ctx context.Context, req ServiceRequest) (*User, error) {
 
 	userInfo, err := s.repo.GetByEmail(ctx, req.Email)
 	if err != nil {
